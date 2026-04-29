@@ -12,20 +12,12 @@ Phases are intentionally small — each one is a shippable slice of work, indepe
 - Create all the folders structured in the project layout
 
 
-## Phase 3 — Create the schema.sql file with the scripts to create the tables
+## Phase 3 — Build the backend: schema, models, controllers, services, and repositories
+- Create the schema.sql file with the scripts to create the tables
+- Create model/pojo classes
+- Create all the controller classes with the routes for the endpoints defined in mission.md and tech-stack.md
+- Create all the service classes with the business logic necessary to be aligned with defined in mission.md and tech-stack.md
+- Create all the repository classes to be able to communicate with the database to be able to save, update and retrieve all the information required
 
-
-## Phase 4 — Create model/pojo classes 
-
-
-## Phase 5 — Create the controller classes
-- create all the controller classes with the routes for the endpoints defined in mission.md and tech-stack.md
-
-## Phase 6 — Create the service classes
-- create all the service classes with the business logic necessary to be aligned with defined in mission.md and tech-stack.md
-
-## Phase 7 — Create the repository classes
-- create all the repository classes to be able to communicate with the database to be able to save, update and retrieve all the information required
-
-## Phase 7 — Create the thymeleaf templates
+## Phase 4 — Create the thymeleaf templates
 - create the templates: createOrUpdateClub.html, findClubs.html, clubDetails.html, playersByClubList.html, createOrUpdatePlayer.html, etc.
