@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="header" class="bg-gray-900 text-white px-6 py-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <a th:href="@{/}" class="text-xl font-bold tracking-tight hover:text-gray-300">Football Data</a>
+        <div class="flex gap-4 items-center">
+            <a th:href="@{/}" class="hover:text-gray-300 text-sm">Home</a>
+            <a th:href="@{/clubs}" class="hover:text-gray-300 text-sm">Find Clubs</a>
+            <a th:href="@{/clubs/new}"
+               class="bg-blue-600 hover:bg-blue-700 text-sm px-3 py-1.5 rounded transition-colors">
+                + Add Club
+            </a>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

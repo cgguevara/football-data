@@ -46,6 +46,11 @@ public class ClubController {
         return ResponseEntity.ok(clubService.updateClub(id, dto));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<ClubResponseDTO> searchClubByName(@RequestParam String name) {
+        return ResponseEntity.ok(clubService.findClubByName(name));
+    }
+
     @GetMapping("/{id}/players")
     public ResponseEntity<List<PlayerResponseDTO>> getPlayersByClub(@PathVariable Integer id) {
         return ResponseEntity.ok(playerService.getPlayersByClubId(id));

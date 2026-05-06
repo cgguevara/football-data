@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+<body>
+<section>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">Club Details</h1>
+        <div class="flex gap-3">
+            <a th:href="@{/clubs/{id}/edit(id=${club.clubId})}"
+               class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                Edit Club
+            </a>
+            <a th:href="@{/clubs/{id}/players/new(id=${club.clubId})}"
+               class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                + Add Player
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-8 overflow-hidden">
+        <table class="w-full text-sm">
+            <tbody>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500 w-40">Name</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${club.clubName}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">City</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${club.city}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">Year Founded</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${club.founded}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">Stadium</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${club.stadium}"></td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-3 font-medium text-gray-500">Capacity</td>
+                    <td class="px-6 py-3 text-gray-900"
+                        th:text="${club.capacity != null ? #numbers.formatInteger(club.capacity, 0, 'COMMA') : '-'}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Players</h2>
+
+    <div th:if="${players == null or players.isEmpty()}" class="text-gray-500 text-sm">
+        No players registered yet.
+        <a th:href="@{/clubs/{id}/players/new(id=${club.clubId})}"
+           class="text-blue-600 hover:underline ml-1">Add the first one →</a>
+    </div>
+
+    <div th:if="${players != null and !players.isEmpty()}"
+         class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                    <th class="px-6 py-3 text-left font-medium text-gray-500">Name</th>
+                    <th class="px-6 py-3 text-left font-medium text-gray-500">Position</th>
+                    <th class="px-6 py-3 text-left font-medium text-gray-500">Nationality</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${players}" class="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td class="px-6 py-3 text-gray-900" th:text="${p.firstName + ' ' + p.lastName}"></td>
+                    <td class="px-6 py-3 text-gray-600" th:text="${p.position}"></td>
+                    <td class="px-6 py-3 text-gray-600" th:text="${p.nationality}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>
