@@ -35,6 +35,13 @@ public class ClubService {
     }
 
     @Transactional(readOnly = true)
+    public List<ClubResponseDTO> getAllClubsList() {
+        return clubRepository.findAll().stream()
+                .map(c -> toResponse(c, false))
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public Map<String, Object> getAllClubs(int limit, int offset) {
         int size = Math.max(limit, 1);
         var page = clubRepository.findAll(PageRequest.of(offset / size, size));
@@ -42,6 +49,13 @@ public class ClubService {
                 .map(c -> toResponse(c, false))
                 .toList();
         return Map.of("clubs", clubs, "total", page.getTotalElements());
+    }
+
+    @Transactional(readOnly = true)
+    public ClubResponseDTO findClubByName(String name) {
+        Club club = clubRepository.findByClubNameIgnoreCase(name)
+                .orElseThrow(() -> new ClubNotFoundException(name));
+        return toResponse(club, true);
     }
 
     public ClubResponseDTO updateClub(Integer id, ClubRequestDTO dto) {
