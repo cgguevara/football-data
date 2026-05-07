@@ -31,31 +31,6 @@ public class PlayerWebController {
         return "createOrUpdatePlayer";
     }
 
-    @GetMapping("/players/{id}/edit")
-    public String editPlayerForm(@PathVariable Integer id,
-                                 @RequestParam Integer clubId,
-                                 Model model) {
-        try {
-            PlayerResponseDTO player = playerService.getPlayerById(id);
-            PlayerRequestDTO dto = new PlayerRequestDTO();
-            dto.setFirstName(player.getFirstName());
-            dto.setLastName(player.getLastName());
-            dto.setNationality(player.getNationality());
-            dto.setBirthDate(player.getBirthDate());
-            dto.setBirthPlace(player.getBirthPlace());
-            dto.setPosition(player.getPosition());
-            dto.setWeight(player.getWeight());
-            dto.setHeight(player.getHeight());
-            dto.setClubId(clubId);
-            model.addAttribute("playerRequestDTO", dto);
-            model.addAttribute("playerId", id);
-            model.addAttribute("clubId", clubId);
-        } catch (PlayerNotFoundException e) {
-            return "redirect:/clubs/" + clubId;
-        }
-        return "createOrUpdatePlayer";
-    }
-
     @PostMapping("/clubs/{clubId}/players")
     public String createPlayer(@PathVariable Integer clubId,
                                @Valid @ModelAttribute PlayerRequestDTO playerRequestDTO,
@@ -70,18 +45,68 @@ public class PlayerWebController {
         return "redirect:/clubs/" + clubId;
     }
 
-    @PostMapping("/players/{id}")
-    public String updatePlayer(@PathVariable Integer id,
+    @GetMapping("/clubs/{clubId}/players/{playerId}/edit")
+    public String editPlayerForm(@PathVariable Integer clubId,
+                                 @PathVariable Integer playerId,
+                                 Model model) {
+        try {
+            PlayerResponseDTO player = playerService.getPlayerById(playerId);
+            PlayerRequestDTO dto = new PlayerRequestDTO();
+            dto.setFirstName(player.getFirstName());
+            dto.setLastName(player.getLastName());
+            dto.setNationality(player.getNationality());
+            dto.setBirthDate(player.getBirthDate());
+            dto.setBirthPlace(player.getBirthPlace());
+            dto.setPosition(player.getPosition());
+            dto.setWeight(player.getWeight());
+            dto.setHeight(player.getHeight());
+            dto.setClubId(clubId);
+            model.addAttribute("playerRequestDTO", dto);
+            model.addAttribute("playerId", playerId);
+            model.addAttribute("clubId", clubId);
+        } catch (PlayerNotFoundException e) {
+            return "redirect:/clubs/" + clubId;
+        }
+        return "createOrUpdatePlayer";
+    }
+
+    @PostMapping("/clubs/{clubId}/players/{playerId}")
+    public String updatePlayer(@PathVariable Integer clubId,
+                               @PathVariable Integer playerId,
                                @Valid @ModelAttribute PlayerRequestDTO playerRequestDTO,
                                BindingResult result,
                                Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("playerId", id);
-            model.addAttribute("clubId", playerRequestDTO.getClubId());
+            model.addAttribute("playerId", playerId);
+            model.addAttribute("clubId", clubId);
             return "createOrUpdatePlayer";
         }
-        playerService.updatePlayer(id, playerRequestDTO);
-        Integer clubId = playerRequestDTO.getClubId();
-        return clubId != null ? "redirect:/clubs/" + clubId : "redirect:/clubs";
+        playerRequestDTO.setClubId(clubId);
+        playerService.updatePlayer(playerId, playerRequestDTO);
+        return "redirect:/clubs/" + clubId;
+    }
+
+    @GetMapping("/clubs/{clubId}/players/{playerId}")
+    public String viewPlayerDetails(@PathVariable Integer clubId,
+                                    @PathVariable Integer playerId,
+                                    Model model) {
+        try {
+            model.addAttribute("player", playerService.getPlayerById(playerId));
+            model.addAttribute("clubId", clubId);
+        } catch (PlayerNotFoundException e) {
+            return "redirect:/clubs/" + clubId;
+        }
+        return "playerDetails";
+    }
+
+    @PostMapping("/clubs/{clubId}/players/{playerId}/delete")
+    public String deletePlayer(@PathVariable Integer clubId,
+                               @PathVariable Integer playerId) {
+        try {
+            playerService.deletePlayer(playerId);
+        } catch (PlayerNotFoundException e) {
+            // already gone, redirect normally
+        }
+        return "redirect:/clubs/" + clubId;
     }
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+<body>
+<section>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">Player Information</h1>
+        <a th:href="@{/clubs/{c}(c=${clubId})}"
+           class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm transition-colors">
+            ← Back to Club
+        </a>
+    </div>
+
+    <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden max-w-lg">
+        <table class="w-full text-sm">
+            <tbody>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500 w-40">Name</td>
+                    <td class="px-6 py-3 text-gray-900"
+                        th:text="${player.firstName + ' ' + player.lastName}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">Nationality</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${player.nationality}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">Birth Date</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${player.birthDate}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">Birth Place</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${player.birthPlace}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">Position</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${player.position}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">Weight</td>
+                    <td class="px-6 py-3 text-gray-900"
+                        th:text="${player.weight != null ? player.weight + ' kg' : '-'}"></td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-3 font-medium text-gray-500">Height</td>
+                    <td class="px-6 py-3 text-gray-900"
+                        th:text="${player.height != null ? player.height + ' m.' : '-'}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

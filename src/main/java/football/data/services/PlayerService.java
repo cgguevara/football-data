@@ -61,6 +61,13 @@ public class PlayerService {
         return toResponse(playerRepository.save(player));
     }
 
+    public void deletePlayer(Integer id) {
+        if (!playerRepository.existsById(id)) {
+            throw new PlayerNotFoundException(id);
+        }
+        playerRepository.deleteById(id);
+    }
+
     private void applyDto(PlayerRequestDTO dto, Player player, Club club) {
         player.setFirstName(dto.getFirstName());
         player.setLastName(dto.getLastName());
