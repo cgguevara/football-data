@@ -61,6 +61,7 @@
                     <th class="px-6 py-3 text-left font-medium text-gray-500">Name</th>
                     <th class="px-6 py-3 text-left font-medium text-gray-500">Position</th>
                     <th class="px-6 py-3 text-left font-medium text-gray-500">Nationality</th>
+                    <th class="px-6 py-3 text-left font-medium text-gray-500">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,6 +69,20 @@
                     <td class="px-6 py-3 text-gray-900" th:text="${p.firstName + ' ' + p.lastName}"></td>
                     <td class="px-6 py-3 text-gray-600" th:text="${p.position}"></td>
                     <td class="px-6 py-3 text-gray-600" th:text="${p.nationality}"></td>
+                    <td class="px-6 py-3">
+                        <div class="flex gap-2">
+                            <a th:href="@{/clubs/{c}/players/{p}/edit(c=${club.clubId},p=${p.playerId})}"
+                               class="text-blue-600 hover:text-blue-800 text-xs font-medium">Edit</a>
+                            <a th:href="@{/clubs/{c}/players/{p}(c=${club.clubId},p=${p.playerId})}"
+                               class="text-gray-600 hover:text-gray-800 text-xs font-medium">View Details</a>
+                            <form th:action="@{/clubs/{c}/players/{p}/delete(c=${club.clubId},p=${p.playerId})}"
+                                  method="post" class="inline">
+                                <button type="submit"
+                                        class="text-red-600 hover:text-red-800 text-xs font-medium"
+                                        onclick="return confirm('Delete this player?')">Delete</button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
