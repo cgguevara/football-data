@@ -11,6 +11,37 @@
             Find a Club
         </a>
     </div>
+
+    <div class="mt-4">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Leagues</h2>
+
+        <div th:if="${leagues == null or leagues.isEmpty()}" class="text-gray-500 text-sm">
+            No leagues yet.
+            <a th:href="@{/leagues/new}" class="text-blue-600 hover:underline ml-1">Create one!</a>
+        </div>
+
+        <div th:if="${leagues != null and !leagues.isEmpty()}"
+             class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                    <tr>
+                        <th class="px-6 py-3 text-left font-medium text-gray-500">League</th>
+                        <th class="px-6 py-3 text-left font-medium text-gray-500">Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="league : ${leagues}" class="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                        <td class="px-6 py-3">
+                            <a th:href="@{/leagues/{id}/clubs(id=${league.leagueId})}"
+                               th:text="${league.leagueName}"
+                               class="text-blue-600 hover:text-blue-800 font-medium"></a>
+                        </td>
+                        <td class="px-6 py-3 text-gray-600" th:text="${league.country}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </section>
 </body>
 </html>

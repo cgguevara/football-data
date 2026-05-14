@@ -98,3 +98,23 @@ Create the following templates for the frontend of the app:
 - Modify the file schema.sql to add the query to create the table league according to described in mission.md file
 - Add the query to alter table club to add a foreign key that references the league table
 - Create the model/pojo class for the table League
+
+# Phase 7
+
+- Create and/or modify the following templates for the frontend of the app:
+
+  * Modify the welcome.html template in order to show all the leagues that exits in the database 
+    in a list format with 2 columns: league name and country, e.g. Premier League - England. The league name should be a link that when the user clicked on it loads the template listClubs.html
+  * Create the listClubs.html template that should display all the teams that belongs one specific league. The list should have 3 columns: Club Name, City, Details, e.g. Arsenal | London | View Details
+    When the user click on the Club Name it should load the clubDetails.html template.
+  * Modify the header.html to add the menu Option: "Create League", modify "Add Club" by "Create Club" and maintain the current "Find Clubs". When the user click on Create League should be loaded the CreateOrUpdateLeague.html template
+  * Create the CreateOrUpdateLeague.html template: This template show a form with a list of text fields to create a League. The list of text fields are:
+    League Name (String), Country(String), Season(String), Number of Teams (Integer)
+    Below the text fields should be a button called Save League
+    After the user click on "Save League" button the league is created in the database and the leagueDetails.html page/template is displayed
+  * leagueDetails.html -> This template show the text "League Details"
+    Above  shows a table with the main details of the League, for example:
+    Name:    		    Premier League
+    Country:    	    England
+    Season:	            2025/2026
+    Number of Teams:	20

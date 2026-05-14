@@ -20,7 +20,8 @@ public class ClubWebController {
     private final LeagueService leagueService;
 
     @GetMapping("/")
-    public String welcome() {
+    public String welcome(Model model) {
+        model.addAttribute("leagues", leagueService.getAllLeagues());
         return "welcome";
     }
 
