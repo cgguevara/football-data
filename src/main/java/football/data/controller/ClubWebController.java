@@ -2,6 +2,7 @@ package football.data.controller;
 
 import football.data.model.*;
 import football.data.services.ClubService;
+import football.data.services.LeagueService;
 import football.data.services.PlayerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class ClubWebController {
 
     private final ClubService clubService;
     private final PlayerService playerService;
+    private final LeagueService leagueService;
 
     @GetMapping("/")
     public String welcome() {
@@ -38,6 +40,7 @@ public class ClubWebController {
     @GetMapping("/clubs/new")
     public String newClubForm(Model model) {
         model.addAttribute("clubRequestDTO", new ClubRequestDTO());
+        model.addAttribute("leagues", leagueService.getAllLeagues());
         return "createOrUpdateClub";
     }
 
@@ -56,10 +59,11 @@ public class ClubWebController {
     public String editClubForm(@PathVariable Integer id, Model model) {
         try {
             ClubResponseDTO club = clubService.getClubById(id);
-            model.addAttribute("clubRequestDTO",
-                    new ClubRequestDTO(club.getClubName(), club.getCity(),
-                            club.getFounded(), club.getStadium(), club.getCapacity()));
+            ClubRequestDTO dto = new ClubRequestDTO(club.getClubName(), club.getCity(),
+                    club.getFounded(), club.getStadium(), club.getCapacity(), club.getLeagueId());
+            model.addAttribute("clubRequestDTO", dto);
             model.addAttribute("clubId", id);
+            model.addAttribute("leagues", leagueService.getAllLeagues());
         } catch (ClubNotFoundException e) {
             return "redirect:/clubs";
         }
@@ -68,8 +72,9 @@ public class ClubWebController {
 
     @PostMapping("/clubs")
     public String createClub(@Valid @ModelAttribute ClubRequestDTO clubRequestDTO,
-                             BindingResult result) {
+                             BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("leagues", leagueService.getAllLeagues());
             return "createOrUpdateClub";
         }
         ClubResponseDTO created = clubService.createClub(clubRequestDTO);
@@ -83,6 +88,7 @@ public class ClubWebController {
                              Model model) {
         if (result.hasErrors()) {
             model.addAttribute("clubId", id);
+            model.addAttribute("leagues", leagueService.getAllLeagues());
             return "createOrUpdateClub";
         }
         clubService.updateClub(id, clubRequestDTO);

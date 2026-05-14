@@ -93,4 +93,8 @@ Create the following templates for the frontend of the app:
     * view player details -> this will have a link or button with text "view details", when the user click on that the template playerDetails will be
       loaded showing the detailed information of a player.
 
-					
+# Phase 6
+
+- Modify the file schema.sql to add the query to create the table league according to described in mission.md file
+- Add the query to alter table club to add a foreign key that references the league table
+- Create the model/pojo class for the table League

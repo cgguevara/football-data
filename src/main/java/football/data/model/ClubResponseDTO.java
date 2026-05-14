@@ -18,5 +18,7 @@ public class ClubResponseDTO {
     private Integer founded;
     private String stadium;
     private Integer capacity;
+    private Integer leagueId;
+    private String leagueName;
     private List<PlayerSummaryDTO> players;
 }

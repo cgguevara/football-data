@@ -1,6 +1,7 @@
 package football.data.controller;
 
 import football.data.model.ClubNotFoundException;
+import football.data.model.LeagueNotFoundException;
 import football.data.model.PlayerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleClubNotFound(ClubNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Map.of("code", "CLUB_NOT_FOUND", "message", ex.getMessage()));
+    }
+
+    @ExceptionHandler(LeagueNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleLeagueNotFound(LeagueNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("code", "LEAGUE_NOT_FOUND", "message", ex.getMessage()));
     }
 
     @ExceptionHandler(PlayerNotFoundException.class)
