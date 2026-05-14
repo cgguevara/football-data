@@ -34,6 +34,10 @@ public class Club {
     @Column(name = "capacity")
     private Integer capacity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "league_id")
+    private League league;
+
     @OneToMany(mappedBy = "club", fetch = FetchType.LAZY)
     private List<Player> players;
 }

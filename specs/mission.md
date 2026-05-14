@@ -125,3 +125,10 @@ weight REAL,
 height REAL,
 club_id INTEGER REFERENCES club(club_id)
 );
+
+CREATE TABLE league (
+league_id SERIAL PRIMARY KEY,
+league_name VARCHAR(255) NOT NULL,
+country VARCHAR(100) NOT NULL
+);
+

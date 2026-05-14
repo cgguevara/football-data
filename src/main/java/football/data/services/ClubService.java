@@ -2,6 +2,7 @@ package football.data.services;
 
 import football.data.model.*;
 import football.data.repository.ClubRepository;
+import football.data.repository.LeagueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Map;
 public class ClubService {
 
     private final ClubRepository clubRepository;
+    private final LeagueRepository leagueRepository;
 
     public ClubResponseDTO createClub(ClubRequestDTO dto) {
         Club club = new Club();
@@ -24,6 +26,11 @@ public class ClubService {
         club.setFounded(dto.getFounded());
         club.setStadium(dto.getStadium());
         club.setCapacity(dto.getCapacity());
+        if (dto.getLeagueId() != null) {
+            League league = leagueRepository.findById(dto.getLeagueId())
+                    .orElseThrow(() -> new LeagueNotFoundException(dto.getLeagueId()));
+            club.setLeague(league);
+        }
         return toResponse(clubRepository.save(club), false);
     }
 
@@ -66,6 +73,11 @@ public class ClubService {
         if (dto.getFounded() != null) club.setFounded(dto.getFounded());
         if (dto.getStadium() != null) club.setStadium(dto.getStadium());
         if (dto.getCapacity() != null) club.setCapacity(dto.getCapacity());
+        if (dto.getLeagueId() != null) {
+            League league = leagueRepository.findById(dto.getLeagueId())
+                    .orElseThrow(() -> new LeagueNotFoundException(dto.getLeagueId()));
+            club.setLeague(league);
+        }
         return toResponse(clubRepository.save(club), false);
     }
 
@@ -76,7 +88,9 @@ public class ClubService {
                     .map(p -> new PlayerSummaryDTO(p.getPlayerId(), p.getFirstName(), p.getLastName(), p.getNationality()))
                     .toList();
         }
+        Integer leagueId = club.getLeague() != null ? club.getLeague().getLeagueId() : null;
+        String leagueName = club.getLeague() != null ? club.getLeague().getLeagueName() : null;
         return new ClubResponseDTO(club.getClubId(), club.getClubName(), club.getCity(),
-                club.getFounded(), club.getStadium(), club.getCapacity(), players);
+                club.getFounded(), club.getStadium(), club.getCapacity(), leagueId, leagueName, players);
     }
 }

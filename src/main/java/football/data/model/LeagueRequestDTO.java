@@ -10,13 +10,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClubRequestDTO {
+public class LeagueRequestDTO {
 
     @NotBlank
-    private String clubName;
-    private String city;
-    private Integer founded;
-    private String stadium;
-    private Integer capacity;
-    private Integer leagueId;
+    private String leagueName;
+
+    @NotBlank
+    private String country;
+
+    private String season;
+    private Integer teamsNumber;
 }
