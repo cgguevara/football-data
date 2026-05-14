@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+<body>
+<section>
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">
+        Clubs in <span th:text="${league.leagueName}"></span>
+    </h1>
+
+    <div th:if="${clubs == null or clubs.isEmpty()}" class="text-gray-500 text-sm">
+        No clubs registered in this league yet.
+        <a th:href="@{/clubs/new}" class="text-blue-600 hover:underline ml-1">Add the first one →</a>
+    </div>
+
+    <div th:if="${clubs != null and !clubs.isEmpty()}"
+         class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                    <th class="px-6 py-3 text-left font-medium text-gray-500">Club Name</th>
+                    <th class="px-6 py-3 text-left font-medium text-gray-500">City</th>
+                    <th class="px-6 py-3 text-left font-medium text-gray-500">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="club : ${clubs}" class="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                    <td class="px-6 py-3">
+                        <a th:href="@{/clubs/{id}(id=${club.clubId})}"
+                           th:text="${club.clubName}"
+                           class="text-blue-600 hover:text-blue-800 font-medium"></a>
+                    </td>
+                    <td class="px-6 py-3 text-gray-600" th:text="${club.city}"></td>
+                    <td class="px-6 py-3">
+                        <a th:href="@{/clubs/{id}(id=${club.clubId})}"
+                           class="text-gray-600 hover:text-gray-800 text-xs font-medium">View Details</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+<body>
+<section>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">League Details</h1>
+        <a th:href="@{/leagues/{id}/clubs(id=${league.leagueId})}"
+           class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm transition-colors">
+            View Clubs
+        </a>
+    </div>
+
+    <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+        <table class="w-full text-sm">
+            <tbody>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500 w-40">Name</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${league.leagueName}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">Country</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${league.country}"></td>
+                </tr>
+                <tr class="border-b border-gray-100">
+                    <td class="px-6 py-3 font-medium text-gray-500">Season</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${league.season != null ? league.season : '-'}"></td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-3 font-medium text-gray-500">Number of Teams</td>
+                    <td class="px-6 py-3 text-gray-900" th:text="${league.teamsNumber != null ? league.teamsNumber : '-'}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

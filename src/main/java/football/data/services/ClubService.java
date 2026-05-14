@@ -65,6 +65,13 @@ public class ClubService {
         return toResponse(club, true);
     }
 
+    @Transactional(readOnly = true)
+    public List<ClubResponseDTO> getClubsByLeagueId(Integer leagueId) {
+        return clubRepository.findByLeague_LeagueId(leagueId).stream()
+                .map(c -> toResponse(c, false))
+                .toList();
+    }
+
     public ClubResponseDTO updateClub(Integer id, ClubRequestDTO dto) {
         Club club = clubRepository.findById(id)
                 .orElseThrow(() -> new ClubNotFoundException(id));

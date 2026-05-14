@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+<body>
+<section>
+    <h1 class="text-2xl font-bold text-gray-900 mb-6"
+        th:text="${leagueId != null} ? 'Edit League' : 'Create League'">Create League</h1>
+
+    <form th:action="${leagueId != null} ? @{/leagues/{id}(id=${leagueId})} : @{/leagues}"
+          th:object="${leagueRequestDTO}"
+          method="post"
+          class="bg-white border border-gray-200 rounded-lg p-8 shadow-sm max-w-lg">
+
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">League Name</label>
+            <input type="text" th:field="*{leagueName}"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                   placeholder="e.g. Premier League"/>
+            <p th:if="${#fields.hasErrors('leagueName')}" th:errors="*{leagueName}"
+               class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+            <input type="text" th:field="*{country}"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                   placeholder="e.g. England"/>
+            <p th:if="${#fields.hasErrors('country')}" th:errors="*{country}"
+               class="text-red-500 text-xs mt-1"></p>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Season</label>
+            <input type="text" th:field="*{season}"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                   placeholder="e.g. 2024-25"/>
+        </div>
+
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Number of Teams</label>
+            <input type="number" th:field="*{teamsNumber}"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                   placeholder="e.g. 20"/>
+        </div>
+
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium transition-colors">
+            Save League
+        </button>
+    </form>
+</section>
+</body>
+</html>
